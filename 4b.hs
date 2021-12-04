@@ -26,18 +26,10 @@ everyNth n a@(x:xs) = x:(everyNth n $ drop n a)
 transpose' :: [Int] -> [Int]
 transpose' xs = concat $ map (\x -> everyNth 5 $ drop x xs) [0..4]
 
--- Topright -> bottomleft diagonal only
-diagWins :: [Int] -> [Int] -> Bool
-diagWins board drawn =
-    let diag = everyNth 4 $ drop 4 board
-    in all (\x -> elem x drawn) diag
-
 boardWins :: [Int] -> [Int] -> Bool
 boardWins drawn board = 
-    let ck1 = (rowWins board drawn)-- || (diagWins board drawn)
-        tsp = transpose' board
-        ck2 = (rowWins tsp drawn)-- || (diagWins tsp drawn)
-    in ck1 || ck2
+    let tsp = transpose' board
+    in (rowWins board drawn) || (rowWins tsp drawn)
 
 readAllBoards :: [String] -> [[Int]]
 readAllBoards [] = []
