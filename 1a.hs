@@ -10,5 +10,5 @@ main = do
     content <- getContents
     let intList = stringLToInt $ lines content
         incNum = numIncrease intList
-    putStrLn $ show incNum
+    print incNum
 
