@@ -26,13 +26,14 @@ isSmall s = isLower $ head s
 dfs :: AdjMap -> Map.Map String Bool -> Bool -> String -> Int
 dfs adj vis used x 
     | x == "end" = 1
-    | x == "start" && Map.findWithDefault True "start" vis = 0
-    | isSmall x && Map.findWithDefault True x vis && used = 0
+    | x == "start" && xVis = 0
+    | isSmall x && xVis && used = 0
     | otherwise =
         let updMap = Map.insert x True vis
             nbrs = Map.findWithDefault [] x adj
-            newUsed = used || (isSmall x && Map.findWithDefault True x vis)
+            newUsed = used || (isSmall x && xVis)
         in sum $ map (dfs adj updMap newUsed) nbrs
+    where xVis = Map.findWithDefault True x vis
 
 main :: IO()
 main = do
